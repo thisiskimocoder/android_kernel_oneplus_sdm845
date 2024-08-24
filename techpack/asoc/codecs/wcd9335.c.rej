@@ -1,0 +1,30 @@
+--- asoc/codecs/wcd9335.c
++++ asoc/codecs/wcd9335.c
+@@ -14194,17 +14209,25 @@ static int tasha_probe(struct platform_device *pdev)
+ static int tasha_remove(struct platform_device *pdev)
+ {
+ 	struct tasha_priv *tasha;
++	int count = 0;
+ 
+ 	tasha = platform_get_drvdata(pdev);
+ 
++	if (!tasha)
++		return -EINVAL;
++
++	for (count = 0; count < tasha->child_count &&
++		count < WCD9335_CHILD_DEVICES_MAX; count++)
++		platform_device_unregister(tasha->pdev_child_devices[count]);
++
+ 	mutex_destroy(&tasha->codec_mutex);
+ 	clk_put(tasha->wcd_ext_clk);
+ 	if (tasha->wcd_native_clk)
+ 		clk_put(tasha->wcd_native_clk);
+ 	mutex_destroy(&tasha->mclk_lock);
+-	devm_kfree(&pdev->dev, tasha);
+-	snd_soc_unregister_codec(&pdev->dev);
+ 	mutex_destroy(&tasha->sb_clk_gear_lock);
++	snd_soc_unregister_codec(&pdev->dev);
++	devm_kfree(&pdev->dev, tasha);
+ 	return 0;
+ }
+ 

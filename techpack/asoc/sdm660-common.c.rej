@@ -1,0 +1,33 @@
+--- sound/soc/msm/sdm660-common.c
++++ asoc/sdm660-common.c
+@@ -15,15 +15,15 @@
+ #include <linux/module.h>
+ #include <linux/platform_device.h>
+ #include <linux/of_device.h>
+-#include <linux/mfd/msm-cdc-pinctrl.h>
+ #include <sound/pcm_params.h>
+-#include <sound/q6afe-v2.h>
+-#include "qdsp6v2/msm-pcm-routing-v2.h"
++#include <dsp/q6afe-v2.h>
++#include "msm-pcm-routing-v2.h"
+ #include "sdm660-common.h"
+ #include "sdm660-internal.h"
+ #include "sdm660-external.h"
+-#include "../codecs/sdm660_cdc/msm-analog-cdc.h"
+-#include "../codecs/wsa881x.h"
++#include "codecs/msm-cdc-pinctrl.h"
++#include "codecs/sdm660_cdc/msm-analog-cdc.h"
++#include "codecs/wsa881x.h"
+ 
+ #define DRV_NAME "sdm660-asoc-snd"
+ 
+--- asoc/sdm660-common.c
++++ asoc/sdm660-common.c
+@@ -17,6 +17,7 @@
+ #include <linux/of_device.h>
+ #include <sound/pcm_params.h>
+ #include <dsp/q6afe-v2.h>
++#include <dsp/audio_notifier.h>
+ #include "msm-pcm-routing-v2.h"
+ #include "sdm660-common.h"
+ #include "sdm660-internal.h"

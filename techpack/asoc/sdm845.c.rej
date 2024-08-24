@@ -1,0 +1,66 @@
+--- asoc/sdm845.c
++++ asoc/sdm845.c
+@@ -2628,21 +2630,6 @@ static int msm_hifi_put(struct snd_kcontrol *kcontrol,
+ 	return 0;
+ }
+ 
+-static s32 msm_qos_value(struct snd_pcm_runtime *runtime)
+-{
+-	s32 usecs;
+-
+-	if (!runtime->rate)
+-		return -EINVAL;
+-
+-	/* take 75% of period time as the deadline */
+-	usecs = (750000 / runtime->rate) * runtime->period_size;
+-	usecs += ((750000 % runtime->rate) * runtime->period_size) /
+-		 runtime->rate;
+-
+-	return usecs;
+-}
+-
+ static int msm_qos_ctl_get(struct snd_kcontrol *kcontrol,
+ 			   struct snd_ctl_elem_value *ucontrol)
+ {
+@@ -2682,7 +2669,7 @@ static int msm_qos_ctl_put(struct snd_kcontrol *kcontrol,
+ 			pr_err("%s: runtime is null\n", __func__);
+ 			return -EINVAL;
+ 		}
+-		usecs = msm_qos_value(substream->runtime);
++		usecs = MSM_LL_QOS_VALUE;
+ 		if (usecs >= 0)
+ 			pm_qos_add_request(&substream->latency_pm_qos_req,
+ 					PM_QOS_CPU_DMA_LATENCY, usecs);
+--- asoc/sdm845.c
++++ asoc/sdm845.c
+@@ -4758,18 +4661,7 @@ static int msm_mi2s_snd_startup(struct snd_pcm_substream *substream)
+ 				__func__, ret);
+ 			goto clean_up;
+ 		}
+-		if (mi2s_auxpcm_conf[index].pcm_i2s_sel_vt_addr != NULL) {
+-			mutex_lock(&mi2s_auxpcm_conf[index].lock);
+-			iowrite32(0,
+-				mi2s_auxpcm_conf[index].pcm_i2s_sel_vt_addr);
+-			mutex_unlock(&mi2s_auxpcm_conf[index].lock);
+-		} else {
+-			dev_err(rtd->card->dev,
+-				"%s lpaif_muxsel_virt_addr is NULL for dai %d\n",
+-				__func__, index);
+-			ret = -EINVAL;
+-			goto clk_off;
+-		}
++
+ 		ret = snd_soc_dai_set_fmt(cpu_dai, fmt);
+ 		if (ret < 0) {
+ 			pr_err("%s: set fmt cpu dai failed for MI2S (%d), err:%d\n",
+--- asoc/sdm845.c
++++ asoc/sdm845.c
+@@ -3189,6 +3327,8 @@ static const struct snd_kcontrol_new msm_snd_controls[] = {
+ 			msm_hifi_put),
+ 	SOC_ENUM_EXT("MultiMedia5_RX QOS Vote", qos_vote, msm_qos_ctl_get,
+ 			msm_qos_ctl_put),
++	SOC_SINGLE_MULTI_EXT("TDM Slot Map", SND_SOC_NOPM, 0, 255, 0, 4,
++	NULL, tdm_slot_map_put),
+ };
+ 
+ static int msm_snd_enable_codec_ext_clk(struct snd_soc_codec *codec,

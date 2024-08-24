@@ -438,6 +438,8 @@ source "drivers/net/wimax/Kconfig"
 
 source "drivers/net/wan/Kconfig"
 
+source "drivers/net/ipa/Kconfig"
+
 source "drivers/net/ieee802154/Kconfig"
 
 config XEN_NETDEV_FRONTEND

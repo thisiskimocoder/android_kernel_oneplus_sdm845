@@ -1,0 +1,103 @@
+--- asoc/codecs/wcd934x/wcd934x-routing.h
++++ asoc/codecs/wcd934x/wcd934x-routing.h
+@@ -124,10 +135,100 @@ const struct snd_soc_dapm_route tavil_slim_audio_map[] = {
+ 	{"SLIM RX6", NULL, "SLIM RX6 MUX"},
+ 	{"SLIM RX7", NULL, "SLIM RX7 MUX"},
+ 
++	/* CDC Rx interface with SLIMBUS */
++	{"CDC_IF RX0 MUX", "SLIM RX0", "SLIM RX0"},
++	{"CDC_IF RX1 MUX", "SLIM RX1", "SLIM RX1"},
++	{"CDC_IF RX2 MUX", "SLIM RX2", "SLIM RX2"},
++	{"CDC_IF RX3 MUX", "SLIM RX3", "SLIM RX3"},
++	{"CDC_IF RX4 MUX", "SLIM RX4", "SLIM RX4"},
++	{"CDC_IF RX5 MUX", "SLIM RX5", "SLIM RX5"},
++	{"CDC_IF RX6 MUX", "SLIM RX6", "SLIM RX6"},
++	{"CDC_IF RX7 MUX", "SLIM RX7", "SLIM RX7"},
++
++	/* VI Feedback */
++	{"AIF4_VI Mixer", "SPKR_VI_1", "VIINPUT"},
++	{"AIF4_VI Mixer", "SPKR_VI_2", "VIINPUT"},
++	{"AIF4 VI", NULL, "AIF4_VI Mixer"},
++
++};
++
++const struct snd_soc_dapm_route tavil_i2s_audio_map[] = {
++
++	/* Virtual input widget Mixer I2S*/
++	{"AIF1_CAP Mixer", "I2S TX1", "I2S TX1"},
++	{"AIF1_CAP Mixer", "I2S TX2", "I2S TX2"},
++	{"AIF1_CAP Mixer", "I2S TX3", "I2S TX3"},
++	{"AIF1_CAP Mixer", "I2S TX4", "I2S TX4"},
++	{"AIF1_CAP Mixer", "I2S TX5", "I2S TX5"},
++	{"AIF1_CAP Mixer", "I2S TX6", "I2S TX6"},
++	{"AIF1_CAP Mixer", "I2S TX7", "I2S TX7"},
++
++	{"AIF2_CAP Mixer", "I2S TX8", "I2S TX8"},
++	{"AIF2_CAP Mixer", "I2S TX11", "I2S TX11"},
++
++	{"AIF3_CAP Mixer", "I2S TX0", "I2S TX0"},
++	{"AIF3_CAP Mixer", "I2S TX1", "I2S TX1"},
++
++	/* CDC Tx interface with I2S */
++	{"I2S TX0", NULL, "CDC_IF TX0 MUX"},
++	{"I2S TX1", NULL, "CDC_IF TX1 MUX"},
++	{"I2S TX2", NULL, "CDC_IF TX2 MUX"},
++	{"I2S TX3", NULL, "CDC_IF TX3 MUX"},
++	{"I2S TX4", NULL, "CDC_IF TX4 MUX"},
++	{"I2S TX5", NULL, "CDC_IF TX5 MUX"},
++	{"I2S TX6", NULL, "CDC_IF TX6 MUX"},
++	{"I2S TX7", NULL, "CDC_IF TX7 MUX"},
++	{"I2S TX8", NULL, "CDC_IF TX8 MUX"},
++	{"I2S TX11", NULL, "CDC_IF TX11 MUX"},
++
++	{"I2S RX0 MUX", "AIF1_PB", "AIF1 PB"},
++	{"I2S RX1 MUX", "AIF1_PB", "AIF1 PB"},
++	{"I2S RX2 MUX", "AIF1_PB", "AIF1 PB"},
++	{"I2S RX3 MUX", "AIF1_PB", "AIF1 PB"},
++	{"I2S RX4 MUX", "AIF1_PB", "AIF1 PB"},
++	{"I2S RX5 MUX", "AIF1_PB", "AIF1 PB"},
++	{"I2S RX6 MUX", "AIF1_PB", "AIF1 PB"},
++	{"I2S RX7 MUX", "AIF1_PB", "AIF1 PB"},
++
++	{"I2S RX2 MUX", "AIF2_PB", "AIF2 PB"},
++	{"I2S RX3 MUX", "AIF2_PB", "AIF2 PB"},
++
++	{"I2S RX4 MUX", "AIF3_PB", "AIF3 PB"},
++	{"I2S RX5 MUX", "AIF3_PB", "AIF3 PB"},
++
++	{"I2S RX0", NULL, "I2S RX0 MUX"},
++	{"I2S RX1", NULL, "I2S RX1 MUX"},
++	{"I2S RX2", NULL, "I2S RX2 MUX"},
++	{"I2S RX3", NULL, "I2S RX3 MUX"},
++	{"I2S RX4", NULL, "I2S RX4 MUX"},
++	{"I2S RX5", NULL, "I2S RX5 MUX"},
++	{"I2S RX6", NULL, "I2S RX6 MUX"},
++	{"I2S RX7", NULL, "I2S RX7 MUX"},
++
++	/* CDC Rx interface with I2S */
++	{"CDC_IF RX0 MUX", "I2S RX0", "I2S RX0"},
++	{"CDC_IF RX1 MUX", "I2S RX1", "I2S RX1"},
++	{"CDC_IF RX2 MUX", "I2S RX2", "I2S RX2"},
++	{"CDC_IF RX3 MUX", "I2S RX3", "I2S RX3"},
++	{"CDC_IF RX4 MUX", "I2S RX4", "I2S RX4"},
++	{"CDC_IF RX5 MUX", "I2S RX5", "I2S RX5"},
++	{"CDC_IF RX6 MUX", "I2S RX6", "I2S RX6"},
++	{"CDC_IF RX7 MUX", "I2S RX7", "I2S RX7"},
++
+ };
+ 
+ const struct snd_soc_dapm_route tavil_audio_map[] = {
+ 
++	/*
++	 * AIF CAP to Mixer routes are common
++	 * for both SLIM as well as I2S
++	 */
++
++	/* Virtual input widgets */
++	{"AIF1 CAP", NULL, "AIF1_CAP Mixer"},
++	{"AIF2 CAP", NULL, "AIF2_CAP Mixer"},
++	{"AIF3 CAP", NULL, "AIF3_CAP Mixer"},
++
+ 	/* WDMA3 */
+ 	{"WDMA3 PORT0 MUX", "DEC0", "ADC MUX0"},
+ 	{"WDMA3 PORT0 MUX", "RX_MIX_TX0", "RX MIX TX0 MUX"},

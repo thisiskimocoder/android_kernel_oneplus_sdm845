@@ -1,0 +1,18 @@
+--- asoc/sdm660-internal.c
++++ asoc/sdm660-internal.c
+@@ -1908,6 +1933,7 @@ static struct snd_soc_dai_link msm_int_dai[] = {
+ 		/* this dai link has playback support */
+ 		.ignore_pmdown_time = 1,
+ 		.id = MSM_FRONTEND_DAI_MULTIMEDIA5,
++		.ops = &msm_fe_qos_ops,
+ 	},
+ 	/* LSM FE */
+ 	{/* hw:x,14 */
+@@ -1975,6 +2001,7 @@ static struct snd_soc_dai_link msm_int_dai[] = {
+ 		.ignore_pmdown_time = 1,
+ 		 /* this dai link has playback support */
+ 		.id = MSM_FRONTEND_DAI_MULTIMEDIA8,
++		.ops = &msm_fe_qos_ops,
+ 	},
+ 	{/* hw:x,18 */
+ 		.name = "HDMI_RX_HOSTLESS",

@@ -1,0 +1,18 @@
+--- asoc/sdm660-ext-dai-links.c
++++ asoc/sdm660-ext-dai-links.c
+@@ -989,6 +1015,7 @@ static struct snd_soc_dai_link msm_ext_common_fe_dai[] = {
+ 		/* this dai link has playback support */
+ 		.ignore_pmdown_time = 1,
+ 		.id = MSM_FRONTEND_DAI_MULTIMEDIA5,
++		.ops = &msm_fe_qos_ops,
+ 	},
+ 	/* LSM FE */
+ 	{/* hw:x,14 */
+@@ -1058,6 +1085,7 @@ static struct snd_soc_dai_link msm_ext_common_fe_dai[] = {
+ 		.ignore_pmdown_time = 1,
+ 		 /* this dai link has playback support */
+ 		.id = MSM_FRONTEND_DAI_MULTIMEDIA8,
++		.ops = &msm_fe_qos_ops,
+ 	},
+ 	{/* hw:x,18 */
+ 		.name = "HDMI_RX_HOSTLESS",

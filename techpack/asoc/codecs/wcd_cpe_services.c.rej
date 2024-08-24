@@ -1,0 +1,28 @@
+--- sound/soc/codecs/wcd_cpe_services.c
++++ asoc/codecs/wcd_cpe_services.c
+@@ -17,10 +17,11 @@
+ #include <linux/completion.h>
+ #include <linux/kthread.h>
+ #include <linux/delay.h>
+-#include <linux/mfd/wcd9xxx/core.h>
+-#include <sound/cpe_cmi.h>
+ #include <sound/soc.h>
++#include <linux/mfd/wcd9xxx/wcd9330_registers.h>
+ #include <linux/mfd/wcd9335/registers.h>
++#include "core.h"
++#include "cpe_cmi.h"
+ #include "wcd_cpe_services.h"
+ #include "wcd_cmi_api.h"
+ 
+--- asoc/codecs/wcd_cpe_services.c
++++ asoc/codecs/wcd_cpe_services.c
+@@ -18,8 +18,7 @@
+ #include <linux/kthread.h>
+ #include <linux/delay.h>
+ #include <sound/soc.h>
+-#include <linux/mfd/wcd9xxx/wcd9330_registers.h>
+-#include <linux/mfd/wcd9335/registers.h>
++#include "wcd9335_registers.h"
+ #include "core.h"
+ #include "cpe_cmi.h"
+ #include "wcd_cpe_services.h"

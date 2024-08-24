@@ -1,0 +1,27 @@
+--- asoc/codecs/wcd934x/wcd934x-mbhc.c
++++ asoc/codecs/wcd934x/wcd934x-mbhc.c
+@@ -1043,6 +1043,7 @@ int tavil_mbhc_post_ssr_init(struct wcd934x_mbhc *mbhc,
+ 		return -EINVAL;
+ 	}
+ 
++	tavil_mbhc_hs_detect_exit(codec);
+ 	wcd_mbhc_deinit(wcd_mbhc);
+ 	ret = wcd_mbhc_init(wcd_mbhc, codec, &mbhc_cb, &intr_ids,
+ 			    wcd_mbhc_registers, TAVIL_ZDET_SUPPORTED);
+--- asoc/codecs/wcd934x/wcd934x-mbhc.c
++++ asoc/codecs/wcd934x/wcd934x-mbhc.c
+@@ -1099,6 +1099,14 @@ int tavil_mbhc_init(struct wcd934x_mbhc **mbhc, struct snd_soc_codec *codec,
+ 	/* Setting default mbhc detection logic to ADC for Tavil */
+ 	wcd_mbhc->mbhc_detection_logic = WCD_DETECTION_ADC;
+ 
++	pdata = dev_get_platdata(codec->dev->parent);
++	if (!pdata) {
++		dev_err(codec->dev, "%s: pdata pointer is NULL\n", __func__);
++		ret = -EINVAL;
++		goto err;
++	}
++	wcd_mbhc->micb_mv = pdata->micbias.micb2_mv;
++
+ 	ret = wcd_mbhc_init(wcd_mbhc, codec, &mbhc_cb,
+ 				&intr_ids, wcd_mbhc_registers,
+ 				TAVIL_ZDET_SUPPORTED);
