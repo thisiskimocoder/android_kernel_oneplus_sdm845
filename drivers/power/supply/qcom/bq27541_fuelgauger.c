@@ -1392,7 +1392,7 @@ static void bq27541_hw_config(struct work_struct *work)
 		return;
 	}
 	external_battery_gauge_register(&bq27541_batt_gauge);
-	bq27541_information_register(&bq27541_batt_gauge);
+	//bq27541_information_register(&bq27541_batt_gauge);
 	bq27541_cntl_cmd(di, BQ27541_SUBCMD_CTNL_STATUS);
 	udelay(66);
 	bq27541_read(BQ27541_REG_CNTL, &flags, 0, di);
@@ -2101,7 +2101,7 @@ static int bq27541_battery_remove(struct i2c_client *client)
 	struct bq27541_device_info *di = i2c_get_clientdata(client);
 
 	external_battery_gauge_unregister(&bq27541_batt_gauge);
-	bq27541_information_unregister(&bq27541_batt_gauge);
+	//bq27541_information_unregister(&bq27541_batt_gauge);
 	bq27541_cntl_cmd(di, BQ27541_SUBCMD_DISABLE_DLOG);
 	udelay(66);
 	bq27541_cntl_cmd(di, BQ27541_SUBCMD_DISABLE_IT);
